@@ -43,12 +43,12 @@ def main(config_path, cache_path, steam_id, api_key):
     """
     Login to Hangouts, send generated message and disconnect.
     """
-    configure_logging(config_path)
+    configure_logging(cache_path)
 
     # TODO: see if can get click to load config file as fallback
     # See default_map (Context Defaults) or click-configfile
     # api_key = config.get('Hangouts', 'refresh_token')
-    config_file = os.path.join(config_path, 'gat_steam.ini')
+    config_file = os.path.join(config_path, 'steam.ini')
     config = ConfigParser()
     config.read(config_file)
     logging.debug('Using config file: %s', config_file)
