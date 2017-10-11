@@ -40,9 +40,7 @@ def create_dir(ctx, param, directory):
 @click.option('--steam-id', '-i', help='SteamID of the user to check.')
 @click.option('--api-key', '-k', help='Steam Web API key')
 def main(config_path, cache_path, steam_id, api_key):
-    """
-    Login to Hangouts, send generated message and disconnect.
-    """
+    """Sends a message via Hangouts if the Steam friend is currently playing a game."""
     configure_logging(cache_path)
 
     # TODO: see if can get click to load config file as fallback
@@ -59,12 +57,12 @@ def main(config_path, cache_path, steam_id, api_key):
         Path(hangouts_token_file).touch()
 
     # Get currently played game, if any
-    url = f"https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={api_key}&format=json&steamids={steam_id}"
+    url = f'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={api_key}&format=json&steamids={steam_id}'
     r = requests.get(url)
     if r.status_code == 200:
         current_game = r.json()['response']['players'][0].get('gameextrainfo')
         if current_game:
-            message = f"Hope you've enjoying {current_game}"
+            message = f'Hope you are enjoying {current_game}'
         else:
             logging.info('Not gaming at the moment.')
             return
@@ -95,7 +93,8 @@ def configure_logging(config_path):
 
     log_format = logging.Formatter(
         fmt='%(asctime)s.%(msecs).03d %(name)-12s %(levelname)-8s %(message)s (%(filename)s:%(lineno)d)',
-        datefmt='%Y-%m-%d %H:%M:%S')
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
     log_handler.setFormatter(log_format)
     logger.addHandler(log_handler)
     # Lower requests module's log level so that OAUTH2 details aren't logged
