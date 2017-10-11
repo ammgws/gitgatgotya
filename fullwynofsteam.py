@@ -66,6 +66,7 @@ def main(config_path, cache_path, steam_id, api_key):
         if current_game:
             message = f"Hope you've enjoying {current_game}"
         else:
+            logging.info('Not gaming at the moment.')
             return
 
     hangouts = HangoutsClient(hangouts_client_id, hangouts_client_secret, hangouts_token_file)
