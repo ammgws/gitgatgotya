@@ -73,7 +73,6 @@ def main(config_path, cache_path, steam_id, api_key):
         sleep(5)  # need time for Hangouts roster to update
         hangouts.send_to_all(message)
         hangouts.disconnect(wait=True)
-        logging.info("Finished sending today's message.")
     else:
         logging.error('Unable to connect to Hangouts.')
 
